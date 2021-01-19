@@ -7,13 +7,16 @@ require('dotenv').config();
 module.exports.run = async () => {
 
     // create connection to hypixel 
-    var client = mc.createClient({
+
+    let credentials = {
         host: "mc.hypixel.net",   // optional
         port: 25565,         // optional
         username: process.env.EMAIL,
         password: process.env.PASSWORD,
         auth: 'mojang' // optional; by default uses mojang, if using a microsoft account, set to 'microsoft'
-    });
+    }
+
+    var client = mc.createClient(credentials);
 
     console.log("Started!");
 
@@ -68,5 +71,18 @@ module.exports.run = async () => {
             }
         }
     });
+
+    // auto reconnect feature
+    client.on('end', () => {
+        client = mc.createClient(credentials);
+    })
+
+    client.on('disconnect', () => {
+        client = mc.createClient(credentials);
+    })
+
+    client.on('kick_disconnect', () => {
+        client = mc.createClient(credentials);
+    })
 
 }
