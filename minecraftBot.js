@@ -1,7 +1,11 @@
 const mc = require('minecraft-protocol');
 const Discord = require('discord.js');
-const channelId = "770264950915596320";
+const axios = require('axios');
+const channelId = "813632918249275432";
 const discordBot = require('./discordBot');
+const users = require('./users.json');
+const fs = require('fs');
+const guildId = "813586633252405258";
 require('dotenv').config();
 
 module.exports.run = async () => {
@@ -25,7 +29,11 @@ module.exports.run = async () => {
     await bot.login(process.env.TOKEN);
 
     // gets the channel
-    let channel = bot.channels.get(channelId);
+    //let guild = bot.guilds.cache.get(guildId); 
+    //console.log(guild);
+    //if(!guild) guild = await bot.guilds.fetch(guildId, true);
+    let channel = bot.channels.cache.get(channelId);
+    if(!channel) channel = await bot.channels.fetch(channelId);
 
     module.exports.client = client;
 
@@ -40,18 +48,18 @@ module.exports.run = async () => {
         client.write('chat', {message:"/limbo"})
     }, 5000);
     
-    client.on('chat', function(packet) {
+    client.on('chat', async function(packet) {
 
         // parses the message from the packet
         var jsonMsg = JSON.parse(packet.message);
 
-        let messageToLog = jsonMsg.text;
+        let message = jsonMsg.text;
         if(jsonMsg.extra){
             jsonMsg.extra.forEach(extra => {
-                messageToLog += " " + extra.text;
+                message += " " + extra.text;
             })
         }
-        console.log(messageToLog);
+        console.log(message);
 
         // checks if the bot can get extra[0]
         if(jsonMsg.extra != undefined){
@@ -78,6 +86,62 @@ module.exports.run = async () => {
                 }
 
             }
+
+            // dm commands
+            if(jsonMsg.text == "From "){
+                message = message.replace("From ", "");
+                let sender;
+                console.log(message);
+                //if(message.split(":")[0].split(" ").length >= 2){
+                  sender = message.split(":")[0].split(" ")[message.split(":")[0].split(" ").length - 2];
+                //} else if(message.split(":")[0].split(" ").length == 3){
+                //  
+                //} else {
+                //  sender = message.split(":")[0]
+                //}
+                
+                let cmd = message.split(":")[1];
+                let args = cmd.split(" ");
+                args.shift();
+                args.shift();
+
+                //console.log(args)
+                
+                //if(args.length == 0) return sendMessage(client, sender, "Specify a command (message the bot 'help' for a list of commands)")
+
+                if(args[0].toLowerCase() == "link"){
+
+                    // makes sure the user included the code
+                    if(args.length == 1) return sendMessage(client, sender, "Please specify a code.")
+
+                    // makes sure the arg is a number
+                    if(isNaN(args[1])) return sendMessage(client, sender, "Invalid code - Must be a number");
+ 
+                    let code = parseInt(args[1]);
+                    const currentlyLinking = require("./index").currentlyLinking;
+
+                    // makes sure code exists
+                    if(!currentlyLinking[code]) return sendMessage(client, sender, "Invalid code - Code does not exist");
+
+                    let uuid = await getUuid(sender);
+
+                    // links discord t o minecraft
+                    users[currentlyLinking[code]] = uuid;
+
+                    fs.writeFile('./users.json', JSON.stringify(users), err => {
+                        if(err) console.log(err);
+                    })
+
+                    sendMessage(client, sender, `Successfully linked your discord to your minecraft.`);
+
+                    let guild = bot.guilds.cache.get(guildId); 
+                    let member = await guild.members.fetch(currentlyLinking[code]);
+
+                    member.setNickname(sender);
+
+                }
+                
+            }
         }
     });
 
@@ -100,4 +164,21 @@ module.exports.run = async () => {
         module.exports.run();
     })
 
+}
+
+async function getUuid(name) {
+    if (name == null) return null;
+    try {
+        let { data } = await axios.post(`https://api.mojang.com/profiles/minecraft`, [name]);
+        return data[0].id;
+
+    }
+    catch (e) {
+        return undefined;
+    }
+}
+
+function sendMessage(bot, username, message){
+    //console.log(`To ${username}: ${message}`)
+    bot.write("chat", {message:`/msg ${username} ${message}`});
 }
