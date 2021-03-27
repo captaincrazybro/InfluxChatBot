@@ -81,6 +81,8 @@ module.exports.run = async () => {
 
                     let message = jsonMsg.extra[1].text;
 
+                    if(message.includes("everyone")) return;
+
                     channel.send(`${username}: ${message}`)
 
                 }
