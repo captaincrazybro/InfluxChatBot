@@ -12,6 +12,7 @@ const updateNames = require('./updateNames');
 const { MessageEmbed } = require('discord.js');
 var blacklists = require("./blacklists.json");
 const prefix = ".";
+const index = require('./index');
 const filterWords = [
     "nig",
     "neg",
@@ -26,6 +27,8 @@ module.exports.run = async () => {
 
     // creates bot
     const bot = new Discord.Client();
+
+    index.setBot(bot);
 
     // error handling
     bot.on("error", (err) => {
@@ -59,7 +62,7 @@ module.exports.run = async () => {
             if(outcome) return;
 
             // sends discord chat to mc
-            client.write("chat", {message:`/gc ${message.author.username}: ${filter.clean(message.content)}`});
+            client.write("chat", {message:`/gc ${message.member.nickname}: ${filter.clean(message.content)}`});
 
         }
 
@@ -106,10 +109,11 @@ module.exports.run = async () => {
 
                 if(args.length > 1){
                     time = ms(args[1]);
+                    let date = new Date(Date.now() + time) 
                     if(!time) return message.channel.send(embed.setTitle("Invalid time"));
                 }
                 
-                blacklists.push({id: target.id, time: time});
+                blacklists.push({id: target.id, date: date});
 
                 fs.writeFile("./blacklists.json", JSON.stringify(blacklists), err => {
                     if(err) console.log(err);
