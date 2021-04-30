@@ -14,8 +14,8 @@ doRunStuff();
 
 module.exports.currentlyLinking = {};
 
-//module.exports.setBot = (bot) => {
-//    setInterval(() => {
-//        updateBlacklists(bot);
-//    }, 43200000)
-//}
+module.exports.setBot = (bot) => {
+    /*setInterval(() => {
+        updateBlacklists(bot);
+    }, 43200000)*/
+}
