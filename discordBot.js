@@ -61,8 +61,16 @@ module.exports.run = async () => {
 
             if(outcome) return;
 
+            // get member
+            let member = message.guild.members.cache.get(message.author.id);
+            if(!member) member = message.guild.members.fetch(message.author.id);
+
+            // parse nickname
+            let nickname = member.nickname;
+            if(!nickname) nickname = message.author.username;
+
             // sends discord chat to mc
-            client.write("chat", {message:`/gc ${message.member.nickname}: ${filter.clean(message.content)}`});
+            client.write("chat", {message:`/gc ${nickname}: ${filter.clean(message.content)}`});
 
         }
 
