@@ -43,16 +43,16 @@ module.exports = {
                     let top9 = data[8];
                     let top10 = data[9];
 
-                    let newAmount1 = (top1.gexp).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
-                    let newAmount2 = (top2.gexp).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
-                    let newAmount3 = (top3.gexp).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
-                    let newAmount4 = (top4.gexp).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
-                    let newAmount5 = (top5.gexp).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
-                    let newAmount6 = (top6.gexp).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
-                    let newAmount7 = (top7.gexp).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
-                    let newAmount8 = (top8.gexp).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
-                    let newAmount9 = (top9.gexp).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
-                    let newAmount10 = (top10.gexp).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+                    let newAmount1 = top1.gexp.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                    let newAmount2 = top2.gexp.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                    let newAmount3 = top3.gexp.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                    let newAmount4 = top4.gexp.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                    let newAmount5 = top5.gexp.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                    let newAmount6 = top6.gexp.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                    let newAmount7 = top7.gexp.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                    let newAmount8 = top8.gexp.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                    let newAmount9 = top9.gexp.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                    let newAmount10 = top10.gexp.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
                     embed = new Discord.MessageEmbed()
                         .setTitle("INFLUX DAILY GEXP LEADERBOARD")
