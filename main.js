@@ -9,6 +9,8 @@ const discordBot = require('./discordBot');
 const minecraftBot = require('./minecraftBot');
 const updateBlacklists = require('./updateBlacklists');
 
+let data = []
+
 client.commands = new Discord.Collection();
 
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
@@ -96,20 +98,32 @@ function sendLeaderboard(channelID) {
                 let top8 = data[7];
                 let top9 = data[8];
                 let top10 = data[9];
+
+                let newAmount1 = (top1.gexp).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+                let newAmount2 = (top2.gexp).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+                let newAmount3 = (top3.gexp).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+                let newAmount4 = (top4.gexp).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+                let newAmount5 = (top5.gexp).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+                let newAmount6 = (top6.gexp).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+                let newAmount7 = (top7.gexp).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+                let newAmount8 = (top8.gexp).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+                let newAmount9 = (top9.gexp).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+                let newAmount10 = (top10.gexp).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+
                 embed = new Discord.MessageEmbed()
                     .setTitle("INFLUX DAILY GEXP LEADERBOARD")
                     .setColor("GOLD")
                     .setDescription(
-                        '`1.`' + ` ${top1.username}` + ` ${top1.gexp}` + " Guild Experience\n" +
-                        '`2.`' + ` ${top2.username}` + ` ${top2.gexp}` + " Guild Experience\n" +
-                        '`3.`' + ` ${top3.username}` + ` ${top3.gexp}` + " Guild Experience\n" +
-                        '`4.`' + ` ${top4.username}` + ` ${top4.gexp}` + " Guild Experience\n" +
-                        '`5.`' + ` ${top5.username}` + ` ${top5.gexp}` + " Guild Experience\n" +
-                        '`6.`' + ` ${top6.username}` + ` ${top6.gexp}` + " Guild Experience\n" +
-                        '`7.`' + ` ${top7.username}` + ` ${top7.gexp}` + " Guild Experience\n" +
-                        '`8.`'  + ` ${top8.username}` + ` ${top8.gexp}` + " Guild Experience\n" +
-                        '`9.`' + ` ${top9.username}` + ` ${top9.gexp}` + " Guild Experience\n" +
-                        '`10.`' + ` ${top10.username}` + ` ${top10.gexp}` + " Guild Experience"
+                        '`1.`' + ` ${top1.username}` + ` ${newAmount1}` + " Guild Experience\n" +
+                        '`2.`' + ` ${top2.username}` + ` ${newAmount2}` + " Guild Experience\n" +
+                        '`3.`' + ` ${top3.username}` + ` ${newAmount3}` + " Guild Experience\n" +
+                        '`4.`' + ` ${top4.username}` + ` ${newAmount4}` + " Guild Experience\n" +
+                        '`5.`' + ` ${top5.username}` + ` ${newAmount5}` + " Guild Experience\n" +
+                        '`6.`' + ` ${top6.username}` + ` ${newAmount6}` + " Guild Experience\n" +
+                        '`7.`' + ` ${top7.username}` + ` ${newAmount7}` + " Guild Experience\n" +
+                        '`8.`'  + ` ${top8.username}` + ` ${newAmount8}` + " Guild Experience\n" +
+                        '`9.`' + ` ${top9.username}` + ` ${newAmount9}` + " Guild Experience\n" +
+                        '`10.`' + ` ${top10.username}` + ` ${newAmount10}` + " Guild Experience"
                     )
                 setTimeout(function () {
                     client.guild.channels.cache.get(channelID).send(embed);
