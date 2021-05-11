@@ -1,0 +1,26 @@
+{
+  "name": "influxchatbot",
+  "version": "1.0.0",
+  "dependencies": {
+    "discord.js": "^12.5.3",
+    "dotenv": "^9.0.1",
+    "fs": "*",
+    "node-fetch": "^2.6.1",
+    "node-schedule": "^2.0.0"
+  },
+  "description": "Influx Chat Bot is an excellent chat bot for the Hypixel guild \"Influx\", it's made by Cqptain and contributed by Frostingly.",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/captaincrazybro/InfluxChatBot.git"
+  },
+  "author": "Cqptain, Frostingly",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/captaincrazybro/InfluxChatBot/issues"
+  },
+  "homepage": "https://github.com/captaincrazybro/InfluxChatBot#readme"
+}

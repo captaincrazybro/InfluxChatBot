@@ -8,6 +8,7 @@ const fs = require('fs');
 const guildId = "813586633252405258";
 require('dotenv').config();
 
+/*
 module.exports.run = async () => {
 
     // create connection to hypixel 
@@ -183,4 +184,4 @@ async function getUuid(name) {
 function sendMessage(bot, username, message){
     //console.log(`To ${username}: ${message}`)
     bot.write("chat", {message:`/msg ${username} ${message}`});
-}
+}*/
