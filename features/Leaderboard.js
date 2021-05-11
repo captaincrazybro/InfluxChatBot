@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 const client = new Discord.Client({ partials: ["MESSAGE", "CHANNEL", "REACTION"]});
-const {myKey} = require("./config.json");
+const {myKey} = require("../config.json");
 const fetch = require('node-fetch');
 
 let data = []
