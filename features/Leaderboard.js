@@ -68,7 +68,7 @@ module.exports = function (channelID) {
                         '`9.`' + ` ${top9.username}` + ` ${newAmount9}` + " Guild Experience\n" +
                         '`10.`' + ` ${top10.username}` + ` ${newAmount10}` + " Guild Experience"
                     )
-                    .setFooter("Created with love by `Frostingly™#6666`");
+                    .setFooter("Created with love by Frostingly™#6666");
                 setTimeout(function () {
                     client.channels.fetch(channelID).then(channel => {
                         channel.send(embed);
