@@ -1,9 +1,9 @@
 const Discord = require('discord.js');
 const client = new Discord.Client({ partials: ["MESSAGE", "CHANNEL", "REACTION"]});
 const lb = require('./commands/leaderboard');
-const {prefix, token} = require("./config.json");
+const {prefix, token, myKey} = require("./config.json");
 const fs = require('fs')
-const schedule = require('node-schedule');
+const fetch = require('node-fetch');
 
 const discordBot = require('./discordBot');
 const minecraftBot = require('./minecraftBot');
@@ -18,13 +18,16 @@ const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('
 client.commands = new Discord.Collection();
 
 function scheduleJob() {
-    schedule.scheduleJob('5 30 **', function () {
-        sendLeaderboard("838858986575888435");
-    });
+    setInterval(function () {
+        let date = new Date();
+        if (date.getHours() === 5 && date.getMinutes() === 30) {
+            sendLeaderboard("838858986575888435");
+        }
+    }, 60000);
 }
 
 client.once('ready', function () {
-    console.log("Hello World!");
+    console.log(`Logged in as ${client.user.tag}`);
     scheduleJob()
     discordBot.run();
 });
@@ -50,11 +53,6 @@ client.on('message', message => {
         console.error(error);
     }
 });
-
-
-
-
-
 
 module.exports.setBot = (bot) => {
     /*setInterval(() => {
@@ -99,16 +97,16 @@ function sendLeaderboard(channelID) {
                 let top9 = data[8];
                 let top10 = data[9];
 
-                let newAmount1 = (top1.gexp).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
-                let newAmount2 = (top2.gexp).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
-                let newAmount3 = (top3.gexp).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
-                let newAmount4 = (top4.gexp).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
-                let newAmount5 = (top5.gexp).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
-                let newAmount6 = (top6.gexp).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
-                let newAmount7 = (top7.gexp).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
-                let newAmount8 = (top8.gexp).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
-                let newAmount9 = (top9.gexp).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
-                let newAmount10 = (top10.gexp).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+                let newAmount1 = top1.gexp.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                let newAmount2 = top2.gexp.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                let newAmount3 = top3.gexp.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                let newAmount4 = top4.gexp.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                let newAmount5 = top5.gexp.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                let newAmount6 = top6.gexp.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                let newAmount7 = top7.gexp.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                let newAmount8 = top8.gexp.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                let newAmount9 = top9.gexp.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                let newAmount10 = top10.gexp.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
                 embed = new Discord.MessageEmbed()
                     .setTitle("INFLUX DAILY GEXP LEADERBOARD")
@@ -125,9 +123,12 @@ function sendLeaderboard(channelID) {
                         '`9.`' + ` ${top9.username}` + ` ${newAmount9}` + " Guild Experience\n" +
                         '`10.`' + ` ${top10.username}` + ` ${newAmount10}` + " Guild Experience"
                     )
+                    .setFooter("Created with love by `Frostingly™#6666`");
                 setTimeout(function () {
-                    client.guild.channels.cache.get(channelID).send(embed);
-                }, 1000);
+                    client.channels.fetch(channelID).then(channel => {
+                        channel.send(embed);
+                    });
+                })
             }, 2000);
         });
 }

@@ -69,8 +69,10 @@ module.exports = {
                             '`9.`' + ` ${top9.username}` + ` ${newAmount9}` + " Guild Experience\n" +
                             '`10.`' + ` ${top10.username}` + ` ${newAmount10}` + " Guild Experience"
                         )
+                        .setTimestamp()
+                        .setFooter("Created with love by Frostingly™#6666");
                     setTimeout(function () {
-                    message.guild.channels.cache.get("838858986575888435").send(embed);
+                        message.guild.channels.cache.get("838858986575888435").send(embed);
                     }, 1000);
                 }, 2000);
             });
