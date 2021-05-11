@@ -3,12 +3,11 @@ const Discord = require('discord.js');
 const axios = require('axios');
 const channelId = "813632918249275432";
 const discordBot = require('./discordBot');
-const users = require('./users.json');
+const users = require('../users.json');
 const fs = require('fs');
 const guildId = "813586633252405258";
 require('dotenv').config();
 
-/*
 module.exports.run = async () => {
 
     // create connection to hypixel 
@@ -184,4 +183,4 @@ async function getUuid(name) {
 function sendMessage(bot, username, message){
     //console.log(`To ${username}: ${message}`)
     bot.write("chat", {message:`/msg ${username} ${message}`});
-}*/
+}

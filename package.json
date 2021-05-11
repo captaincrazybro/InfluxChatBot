@@ -9,7 +9,7 @@
     "node-schedule": "^2.0.0"
   },
   "description": "Influx Chat Bot is an excellent chat bot for the Hypixel guild \"Influx\", it's made by Cqptain and contributed by Frostingly.",
-  "main": "main.js",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

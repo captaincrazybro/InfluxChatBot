@@ -1,15 +1,13 @@
 const Discord = require('discord.js');
 const client = new Discord.Client({ partials: ["MESSAGE", "CHANNEL", "REACTION"]});
-const lb = require('./commands/leaderboard');
 const {prefix, token, myKey} = require("./config.json");
 const fs = require('fs')
 const fetch = require('node-fetch');
+const leaderboard = require('/features/Leaderboard');
 
-const discordBot = require('./discordBot');
-const minecraftBot = require('./minecraftBot');
+const discordBot = require('./Robots/discordBot');
+const minecraftBot = require('./Robots/minecraftBot');
 const updateBlacklists = require('./updateBlacklists');
-
-let data = []
 
 client.commands = new Discord.Collection();
 
@@ -21,7 +19,7 @@ function scheduleJob() {
     setInterval(function () {
         let date = new Date();
         if (date.getHours() === 5 && date.getMinutes() === 30) {
-            sendLeaderboard("838858986575888435");
+            leaderboard();
         }
     }, 60000);
 }
@@ -60,6 +58,7 @@ module.exports.setBot = (bot) => {
     }, 43200000)*/
 }
 
+/*
 function sendLeaderboard(channelID) {
     let today = new Date();
     let dd = String(today.getDate()).padStart(2, '0');
@@ -131,4 +130,4 @@ function sendLeaderboard(channelID) {
                 })
             }, 2000);
         });
-}
+}*/

@@ -4,12 +4,12 @@ const fs = require('fs');
 const channelId = "813632918249275432";
 const ownerId = "813603125641347083";
 const cqptainId = "375452395733254144";
-const users = require('./users.json');
+const users = require('../users.json');
 const ms = require("ms");
 var Filter = require('bad-words'),
     filter = new Filter();
 const { MessageEmbed } = require('discord.js');
-const index = require('./main');
+const index = require('../index');
 const filterWords = [
     "nig",
     "neg",
