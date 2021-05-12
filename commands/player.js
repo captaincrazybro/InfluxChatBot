@@ -3,6 +3,7 @@ const users = require('../users.json');
 
 module.exports = {
     name: 'player',
+    aliases: ["minecraftaccount", "mcacc", "mc-acc"],
     async execute(message, args) {
         let embed = new Discord.MessageEmbed()
             .setColor("GOLD");

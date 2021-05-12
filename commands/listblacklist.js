@@ -1,12 +1,16 @@
 const Discord = require('discord.js');
+const fs = require('fs');
 
 module.exports = {
-    name: 'listblacklist',
+    name: 'listblacklists',
+    aliases: ["listbl", "list-blacklists", "lsbl", "ls-bl", "listbls", "lsbls"],
     execute(message, args) {
         let embed = new Discord.MessageEmbed()
             .setColor("BLUE");
 
         let description = "";
+
+        let blacklists = JSON.parse(fs.readFileSync("./blacklists.json"));
 
         blacklists.forEach(val => {
             description += `<@${val.id}>\n`;
