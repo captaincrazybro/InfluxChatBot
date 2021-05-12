@@ -28,7 +28,7 @@ module.exports = function (channelID, client) {
                     .then(() => {
                         if(data.length == guildInformation.guild.members.length){
                             let embed = new Discord.MessageEmbed()
-                                .setTitle(`Influx Daily GEXP Leaderboard ${moment.utc(today).format('DD/MM/YY')}`)
+                                .setTitle(`Influx Daily GEXP Leaderboard ${today}`)
                                 .setColor("GOLD")
 
                             data.slice(0, 10)
