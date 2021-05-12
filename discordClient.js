@@ -15,8 +15,7 @@ module.exports = () => {
 
     // function to schedule gtop
     function scheduleJob() {
-        console.log('hi');
-        schedule.scheduleJob('30 5 * * *',function () {
+        schedule.scheduleJob('55 5 * * *',function () {
             leaderboard("841715854181138462", client);
         });
     }
