@@ -1,32 +1,34 @@
-const { MessageEmbed } = require("discord.js");
+const Discord = require("discord.js");
 const fs = require('fs');
+const index = require('../index');
+const functions = require('../Functions');
 
 module.exports = {
     name: "removeblacklist",
     aliases: ["rmbl", "removebl", "remove-blacklist", "rm-bl", "remove-bl"],
     async execute(message, args){
-        if(!message.member.hasPermission("MANAGE_CHANNELS")) return;
-
-        let embed = new MessageEmbed()
+        let embed = new Discord.MessageEmbed()
             .setColor("GOLD");
 
-        if(args.length == 0) return message.channel.send(embed.setTitle("Specify a user"));
+        if(!message.member.hasPermission("MANAGE_CHANNELS")) return message.channel.send(embed.setTitle("You do not have permission to execute this command!")).then(msg => msg.delete( {timeout: 3000} ));
+
+        if(args.length === 0) return message.channel.send(embed.setDescription("Specify a user"));
 
         let target = message.guild.members.cache.get(message.mentions.users.first()?.id) || message.guild.members.cache.get(args[0]) || await message.guild.members.fetch(args[0]).catch(e => console.log(`Error while fetching user ${args[0]}`));
 
-        if(!target) return message.channel.send(embed.setTitle("User doesn't exist"));
+        if(!target) return message.channel.send(embed.setDescription("User doesn't exist"));
 
         let outcome = false;
 
         let blacklists = JSON.parse(fs.readFileSync("./blacklists.json"));
 
         blacklists.forEach(val => {
-            if(val.id == target.id) outcome = true;
+            if(val.id === target.id) outcome = true;
         })
 
-        if(!outcome) return message.channel.send(embed.setTitle("User is not blacklisted"));
+        if(!outcome) return message.channel.send(embed.setDescription("User is not blacklisted"));
 
-        blacklists = blacklists.filter(val => val.id != target.id);
+        blacklists = blacklists.filter(val => val.id !== target.id);
 
         fs.writeFile("./blacklists.json", JSON.stringify(blacklists), err => {
             if(err) console.log(err);
@@ -36,6 +38,7 @@ module.exports = {
             .setColor("BLUE")
             .setDescription(`Successfully unblacklisted <@${target.id}>`)
 
-        message.channel.send(embed);
+        await message.channel.send(embed);
+        message.delete( {timeout: 2000} )
     }
 }

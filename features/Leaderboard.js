@@ -1,14 +1,15 @@
 const Discord = require('discord.js');
-const {myKey} = require("../config.json");
 const fetch = require('node-fetch');
+const moment = require('moment');
+require('dotenv').config();
 
 module.exports = function (channelID, client) {
     let today = new Date();
     let dd = String(today.getDate()).padStart(2, '0');
-    let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    let mm = String(today.getMonth() + 1).padStart(2, '0');
     let yyyy = today.getFullYear();
     today = yyyy + '-' + mm + '-' + dd;
-    const guild = `https://api.hypixel.net/guild?name=Influx&key=${myKey}`
+    const guild = `https://api.hypixel.net/guild?name=Influx&key=${process.env.APIKEY}`
     let data = []
     fetch(guild)
         .then(guildInfo => guildInfo.json())
@@ -24,30 +25,64 @@ module.exports = function (channelID, client) {
                         };
                         data.push(array);
                         data.sort((a, b) => b.gexp - a.gexp);
-                    });
+                    })
+                    .then(() => {
+                        if(data.length == guildInformation.guild.members.length){
+                            let embed = new Discord.MessageEmbed()
+                                .setTitle(`Influx Daily GEXP Leaderboard ${moment.utc(today).format('DD/MM/YY')}`)
+                                .setColor("GOLD")
+
+                            data.slice(0, 10)
+
+                            let description = "";
+
+                            for (let i = 0; i < 10; i++) {
+                                let stat = data[i];
+                                let newAmount = stat.gexp.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                                if (stat.gexp !== 0) {
+                                    description += `\`${i + 1}.\` ${stat.username} ${newAmount} Guild Experience\n`;
+                                    embed.setFooter("Rest could not be counted, as their daily GEXP is 0.")
+                                }
+                            }
+
+                            embed.setDescription(description);
+
+                            client.channels.fetch(channelID).then(channel => {
+                                channel.send(embed);
+                            });
+
+                        }
+                    })
             }
-            setTimeout(function () {
-                let embed = new Discord.MessageEmbed()
-                    .setTitle("Influx Daily Gexp Leaderboard")
-                    .setColor("GOLD")
-
-                data.slice(0, 10)
-
-                let description = "";
-
-                for(let i = 0; i < 10; i++){
-                    let stat = data[i];
-                    let newAmount = stat.gexp.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-                    description += `\`${i + 1}.\` ${stat.username} ${newAmount} Guild Experience\n`;
-                }
-
-                embed.setDescription(description);
-
+            /*try {
                 setTimeout(function () {
-                    client.channels.fetch(channelID).then(channel => {
-                        channel.send(embed);
-                    });
-                })
-            }, 2000);
+                    let embed = new Discord.MessageEmbed()
+                        .setTitle(`Influx Daily GEXP Leaderboard ${moment.utc(today).format('DD/MM/YY')}`)
+                        .setColor("GOLD")
+
+                    data.slice(0, 10)
+
+                    let description = "";
+
+                    for (let i = 0; i < 10; i++) {
+                        let stat = data[i];
+                        let newAmount = stat.gexp.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                        if (stat.gexp !== 0) {
+                            description += `\`${i + 1}.\` ${stat.username} ${newAmount} Guild Experience\n`;
+                            embed.setFooter("Rest could not be counted, as their daily GEXP is 0.")
+                        }
+                    }
+
+                    embed.setDescription(description);
+
+                    setTimeout(function () {
+                        client.channels.fetch(channelID).then(channel => {
+                            channel.send(embed);
+                        });
+                    })
+                }, 4000);
+            } catch(err) {
+                console.log("Failed" + err)
+            }*/
         });
 }
