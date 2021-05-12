@@ -4,11 +4,10 @@ const moment = require('moment');
 require('dotenv').config();
 
 module.exports = function (channelID, client) {
-    let today = new Date();
-    let dd = String(today.getDate()).padStart(2, '0');
-    let mm = String(today.getMonth() + 1).padStart(2, '0');
-    let yyyy = today.getFullYear();
-    today = yyyy + '-' + mm + '-' + dd;
+    // Date object initialized as per New Zealand timezone. Returns a datetime string
+    let nz_date_string = new Date().toLocaleString("en-US", { timeZone: "America/New_York" });
+
+    today = nz_date_string.split(", ")[0];
     const guild = `https://api.hypixel.net/guild?name=Influx&key=${process.env.APIKEY}`
     let data = []
     fetch(guild)
