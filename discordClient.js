@@ -4,26 +4,24 @@ const fs = require("fs");
 const leaderboard = require("./features/Leaderboard");
 const schedule = require('node-schedule');
 const prefix = ".";
-const functions = require('./Functions');
 require('dotenv').config();
 
 module.exports = () => {
 
     // reads the commands folder
-
-    const commandFiles = fs.readdirSync('./commands');
+    const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 
     client.commands = new Discord.Collection();
 
     // function to schedule gtop
     function scheduleJob() {
-        schedule.scheduleJob('30 5 * * *',function () {
+        schedule.scheduleJob('55 5 * * *',function () {
             leaderboard("841715854181138462", client);
         });
     }
 
     // executes when the bot starts
-    client.once('ready', async function () {
+    client.once('ready', function () {
         console.log(`[Discord] Logged in as ${client.user.tag}`);
         scheduleJob()
     });
@@ -42,7 +40,7 @@ module.exports = () => {
     // message event handler that houses the command handler
     client.on('message', message => {
         if (!message.content.startsWith(prefix) || message.author.bot) return;
-        if (message.channel.type === "dm") return;
+        if (message.channel.type == "dm") return;
         const args = message.content.slice(prefix.length).trim().split(/ +/);
         const command = args.shift().toLowerCase();
 
