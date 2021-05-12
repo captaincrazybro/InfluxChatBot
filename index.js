@@ -11,7 +11,7 @@ async function start() {
     discordClient();
 
     // starts the chat bots
-    //await minecraftChatBot.run();
+    await minecraftChatBot.run();
     discordChatBot.run();
 }
 

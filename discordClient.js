@@ -42,7 +42,7 @@ module.exports = () => {
     // message event handler that houses the command handler
     client.on('message', message => {
         if (!message.content.startsWith(prefix) || message.author.bot) return;
-        if (message.channel.type == "dm") return;
+        if (message.channel.type === "dm") return;
         const args = message.content.slice(prefix.length).trim().split(/ +/);
         const command = args.shift().toLowerCase();
 
@@ -55,6 +55,6 @@ module.exports = () => {
         }
     });
 
-    client.login(process.env.token);
+    client.login(process.env.TOKEN);
 
 }
