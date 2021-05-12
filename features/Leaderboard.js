@@ -7,7 +7,9 @@ module.exports = function (channelID, client) {
     // Date object initialized as per New Zealand timezone. Returns a datetime string
     let nz_date_string = new Date().toLocaleString("en-US", { timeZone: "America/New_York" });
 
-    let today = nz_date_string.split(", ")[0].replace("/", "-");
+    let date = nz_date_string.split(", ")[0].split("/");
+    let today = date[2] + "-" + date[1] + "-" + date[0];
+
     const guild = `https://api.hypixel.net/guild?name=Influx&key=${process.env.APIKEY}`
     let data = []
     fetch(guild)
