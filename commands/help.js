@@ -1,5 +1,5 @@
 const Discord = require('discord.js');
-const {prefix} = require('../config.json');
+const prefix = "."
 const index = require('../index');
 const functions = require('../Functions');
 
