@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 const prefix = "."
-const index = ".";
+const index = require('../index');;
 const functions = require('../Functions');
 
 module.exports = {
