@@ -55,6 +55,6 @@ module.exports = () => {
         }
     });
 
-    client.login("ODQxMzE3MjkxMjQwNDU2MjMz.YJk_yQ.lovuDk_a1Iyum1nNnDTvqyYu_dU");
+    client.login(process.env.token);
 
 }

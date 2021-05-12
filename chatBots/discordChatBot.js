@@ -77,12 +77,6 @@ function filterCheck(message){
     return outcome;
 }
 
-async function getName(uuid) {
-    if (uuid == null) return null;
-    let { data } = await axios.get(`https://sessionserver.mojang.com/session/minecraft/profile/${uuid}`);//`https://api.mojang.com/user/profiles/${uuid}/names`);
-    return data.name
-}
-
 // function to set client
 module.exports.setClient = (newClient) => {
     client = newClient;
