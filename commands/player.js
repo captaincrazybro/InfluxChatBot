@@ -1,5 +1,7 @@
 const Discord = require('discord.js');
 const users = require('../users.json');
+const functions = require('../Functions');
+const index = require('../index');
 
 module.exports = {
     name: 'player',
@@ -8,10 +10,13 @@ module.exports = {
         let embed = new Discord.MessageEmbed()
             .setColor("GOLD");
 
-        if(!users[message.author.id]) return message.channel.send(embed.setTitle("Your discord is not linked to any player."));
+        if (index.currentlyCooldowned[message.author.id] === message.author.id) return message.reply(embed.setDescription("Please wait a few seconds before executing the command again!")).then(msg => msg.delete( {timeout: 3000} ).then(message.delete( {timeout: 2000} )))
+        functions.setCooldown(5, message.author.id, message);
+        if(!users[message.author.id]) return message.reply(embed.setDescription("Your discord is not linked to any player. Please use `.link` to link your account!")).then(msg => msg.delete( {timeout: 3000} ));
+        if (index.currentlyCooldowned[message.author.id] === message.author.id) return message.reply(embed.setDescription("Please wait a few seconds before executing the command again!")).then(msg => msg.delete( {timeout: 3000} ).then(message.delete( {timeout: 2000} )))
 
         let uuid = users[message.author.id];
-        let name = await getName(uuid);
+        let name = await functions.getName(uuid);
 
         embed.setColor("BLUE")
             .setThumbnail(`https://crafatar.com/renders/head/${uuid}?overlay=true`)
@@ -19,6 +24,7 @@ module.exports = {
             .addField("IGN", `${name}`)
             .addField("UUID", uuid)
 
-        message.channel.send(embed);
+        await message.channel.send(embed);
+        message.delete( {timeout: 2000} )
     }
 }

@@ -4,13 +4,14 @@ const minecraftChatBot = require('./chatBots/minecraftChatBot');
 const updateBlacklists = require('./updateBlacklists');
 
 module.exports.currentlyLinking = {};
+module.exports.currentlyCooldowned = {};
 
 async function start() {
     // starts the regular discord bot
     discordClient();
 
     // starts the chat bots
-    await minecraftChatBot.run();
+    //await minecraftChatBot.run();
     discordChatBot.run();
 }
 

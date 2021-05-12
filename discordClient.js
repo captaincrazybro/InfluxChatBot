@@ -4,25 +4,26 @@ const fs = require("fs");
 const leaderboard = require("./features/Leaderboard");
 const schedule = require('node-schedule');
 const prefix = ".";
+const functions = require('./Functions');
 require('dotenv').config();
 
 module.exports = () => {
 
     // reads the commands folder
-    const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
+
+    const commandFiles = fs.readdirSync('./commands');
 
     client.commands = new Discord.Collection();
 
     // function to schedule gtop
     function scheduleJob() {
-        console.log('hi');
         schedule.scheduleJob('30 5 * * *',function () {
             leaderboard("841715854181138462", client);
         });
     }
 
     // executes when the bot starts
-    client.once('ready', function () {
+    client.once('ready', async function () {
         console.log(`[Discord] Logged in as ${client.user.tag}`);
         scheduleJob()
     });
@@ -54,6 +55,6 @@ module.exports = () => {
         }
     });
 
-    client.login(process.env.TOKEN);
+    client.login("ODQxMzE3MjkxMjQwNDU2MjMz.YJk_yQ.lovuDk_a1Iyum1nNnDTvqyYu_dU");
 
 }

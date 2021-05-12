@@ -1,11 +1,12 @@
 const Discord = require('discord.js');
 const {myKey} = require("../config.json");
 const fetch = require('node-fetch');
+const moment = require('moment');
 
 module.exports = function (channelID, client) {
     let today = new Date();
     let dd = String(today.getDate()).padStart(2, '0');
-    let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    let mm = String(today.getMonth() + 1).padStart(2, '0');
     let yyyy = today.getFullYear();
     today = yyyy + '-' + mm + '-' + dd;
     const guild = `https://api.hypixel.net/guild?name=Influx&key=${myKey}`
@@ -28,7 +29,7 @@ module.exports = function (channelID, client) {
             }
             setTimeout(function () {
                 let embed = new Discord.MessageEmbed()
-                    .setTitle(`Influx Daily GEXP Leaderboard ${today}`)
+                    .setTitle(`Influx Daily GEXP Leaderboard ${moment.utc(today).format('DD/MM/YY')}`)
                     .setColor("GOLD")
 
                 data.slice(0, 10)
@@ -38,7 +39,10 @@ module.exports = function (channelID, client) {
                 for(let i = 0; i < 10; i++){
                     let stat = data[i];
                     let newAmount = stat.gexp.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-                    description += `\`${i + 1}.\` ${stat.username} ${newAmount} Guild Experience\n`;
+                    if (stat.gexp !== 0) {
+                        description += `\`${i + 1}.\` ${stat.username} ${newAmount} Guild Experience\n`;
+                        embed.setFooter("Rest could not be counted, as their daily GEXP is 0.")
+                    }
                 }
 
                 embed.setDescription(description);
