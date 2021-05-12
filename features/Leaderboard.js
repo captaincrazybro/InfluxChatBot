@@ -41,7 +41,7 @@ module.exports = function (channelID, client) {
                                 let newAmount = stat.gexp.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
                                 if (stat.gexp !== 0) {
                                     description += `\`${i + 1}.\` ${stat.username} ${newAmount} Guild Experience\n`;
-                                    embed.setFooter("Rest could not be counted, as their daily GEXP is 0.")
+                                    //embed.setFooter("Rest could not be counted, as their daily GEXP is 0.")
                                 }
                             }
 

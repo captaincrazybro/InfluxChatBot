@@ -11,6 +11,7 @@ module.exports = {
             .setColor("BLUE")
             .setTitle("InfluxBot Command")
             .addField(`${prefix}addblacklist <user>`, "Blacklists a user and prevents them from using the chat bot.")
+            .addField(`${prefix}information <user>`, "Gets information about a server member.")
             .addField(`${prefix}leaderboard`, "Shows the today's daily gexp leaderboard.")
             .addField(`${prefix}link <code>`, "Links your minecraft account.")
             .addField(`${prefix}listblacklists`, "Lists the currently blacklisted users.")
