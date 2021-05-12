@@ -13,6 +13,6 @@ module.exports = {
         if (index.currentlyCooldowned[message.author.id] === message.author.id) return message.reply(embed.setTitle("Please wait a few seconds before executing the command again!")).then(msg => msg.delete( {timeout: 3000} ).then(message.delete( {timeout: 2000} )))
         functions.setCooldown(5, message.author.id, message);
         leaderboard(message.channel.id, client);
-        message.delete( {timeout: 2000} );
+        message.delete( {timeout: 4000} );
     }
 }

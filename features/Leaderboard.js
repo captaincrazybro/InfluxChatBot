@@ -53,7 +53,7 @@ module.exports = function (channelID, client) {
                             channel.send(embed);
                         });
                     })
-                }, 2000);
+                }, 4000);
             } catch(err) {
                 console.log("Failed" + err)
             }
