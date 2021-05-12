@@ -2,7 +2,7 @@ const mc = require('minecraft-protocol');
 const Discord = require('discord.js');
 const axios = require('axios');
 const channelId = "813632918249275432";
-const discordBot = require('./discordBot');
+const discordBot = require('./discordChatBot');
 const users = require('../users.json');
 const fs = require('fs');
 const guildId = "813586633252405258";
@@ -22,7 +22,7 @@ module.exports.run = async () => {
 
     var client = mc.createClient(credentials);
 
-    console.log("Started!");
+    console.log("[Chat] Chat Bot Started!");
 
     const bot = new Discord.Client();
 
@@ -40,7 +40,7 @@ module.exports.run = async () => {
     discordBot.setClient(client);
 
     client.on("error", (err) => {
-        console.log(err);
+        console.log(`[Chat] ` + err);
     });
 
     // sends bot to afk place so doesn't get spammed by
@@ -59,7 +59,7 @@ module.exports.run = async () => {
                 message += " " + extra.text;
             })
         }
-        console.log(message);
+        console.log(`[Chat] ` + message);
 
         // checks if the bot can get extra[0]
         if(jsonMsg.extra != undefined){
@@ -93,7 +93,6 @@ module.exports.run = async () => {
             if(jsonMsg.text == "From "){
                 message = message.replace("From ", "");
                 let sender;
-                console.log(message);
                 //if(message.split(":")[0].split(" ").length >= 2){
                   sender = message.split(":")[0].split(" ")[message.split(":")[0].split(" ").length - 2];
                 //} else if(message.split(":")[0].split(" ").length == 3){
@@ -131,7 +130,7 @@ module.exports.run = async () => {
                     users[currentlyLinking[code]] = uuid;
 
                     fs.writeFile('./users.json', JSON.stringify(users), err => {
-                        if(err) console.log(err);
+                        if(err) console.log(`[Chat] ` + err);
                     })
 
                     sendMessage(client, sender, `Successfully linked your discord to your minecraft.`);
@@ -149,19 +148,19 @@ module.exports.run = async () => {
 
     // auto reconnect feature
     client.on('end', (packet) => {
-        console.log(packet);
+        console.log(`[Chat] ` + packet);
         bot.destroy;
         module.exports.run();
     })
 
     client.on('disconnect', (packet) => {
-        console.log(packet);
+        console.log(`[Chat] ` + packet);
         bot.destroy;
         module.exports.run();
     })
 
     client.on('kick_disconnect', (packet) => {
-        console.log(packet);
+        console.log(`[Chat] ` + packet);
         bot.destroy;
         module.exports.run();
     })

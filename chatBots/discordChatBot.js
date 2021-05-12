@@ -26,7 +26,7 @@ module.exports.run = async () => {
 
     // error handling
     bot.on("error", (err) => {
-        console.log(err);
+        console.log(`[Chat] ` + err);
     });
 
     // message handler

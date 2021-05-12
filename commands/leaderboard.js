@@ -2,7 +2,8 @@ const leaderboard = require('../features/Leaderboard');
 
 module.exports = {
     name: 'leaderboard',
-    execute(message, args) {
-        leaderboard("841715854181138462");
+    aliases: ["lb", "gtop", "gexptop", "gexplb"],
+    execute(message, args, client) {
+        leaderboard(message.channel.id, client);
     }
 }
