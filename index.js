@@ -1,18 +1,21 @@
-const discordBot = require('./discordBot');
-const minecraftBot = require('./minecraftBot');
-const updateNames = require('./updateNames');
+const discordClient = require('./discordClient');
+const discordChatBot = require('./chatBots/discordChatBot');
+const minecraftChatBot = require('./chatBots/minecraftChatBot');
 const updateBlacklists = require('./updateBlacklists');
 
-// starts bot the discord bot and minecraft bot
- 
-let doRunStuff = async () => {
-    await minecraftBot.run();
-    discordBot.run();
+module.exports.currentlyLinking = {};
+
+async function start() {
+    // starts the regular discord bot
+    discordClient();
+
+    // starts the chat bots
+    await minecraftChatBot.run();
+    discordChatBot.run();
 }
 
-doRunStuff();
-
-module.exports.currentlyLinking = {};
+// starts the program
+start();
 
 module.exports.setBot = (bot) => {
     /*setInterval(() => {
