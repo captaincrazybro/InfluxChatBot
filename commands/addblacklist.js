@@ -1,20 +1,22 @@
-const { MessageEmbed } = require('discord.js');
+const Discord = require('discord.js');
 const fs = require('fs');
+const index = require('../index');
+const functions = require('../Functions');
 
 module.exports = {
     name: 'addblacklist',
     aliases: ["addbl", "add-blacklist"],
     async execute(message, args) {
-        if(!message.member.hasPermission("MANAGE_CHANNELS")) return;
-                
-        let embed = new MessageEmbed()
+        let embed = new Discord.MessageEmbed()
             .setColor("GOLD");
 
-        if(args.length == 0) return message.channel.send(embed.setTitle("Specify a user"));
+        if(!message.member.hasPermission("MANAGE_CHANNELS")) return message.reply(embed.setDescription("You do not have permission to execute this command!")).then(msg => msg.delete( {timeout: 3000} ));
+
+        if(args.length == 0) return message.reply(embed.setDescription("Specify a user"));
 
         let target = message.guild.members.cache.get(message.mentions.users.first()?.id) || message.guild.members.cache.get(args[0]) || await message.guild.members.fetch(args[0]).catch(e => console.log(`Error while fetching user ${args[0]}`));
 
-        if(!target) return message.channel.send(embed.setTitle("User doesn't exist"));
+        if(!target) return message.channel.reply(embed.setDescription("User doesn't exist"));
 
         let blacklists = JSON.parse(fs.readFileSync("./blacklists.json"));
 
@@ -24,7 +26,7 @@ module.exports = {
             if(val.id == target.id) outcome = true;
         })
 
-        if(outcome) return message.channel.send(embed.setTitle("User is already blacklists"));
+        if(outcome) return message.channel.reply(embed.setTitle("User is already blacklists"));
 
         let time = null;
 
@@ -46,6 +48,7 @@ module.exports = {
             .setColor("BLUE")
             .setDescription(`Successfully blacklisted <@${target.id}>`)
 
-        message.channel.send(embed);
+        await message.channel.send(embed);
+        message.delete( {timeout: 2000} )
     }
 }

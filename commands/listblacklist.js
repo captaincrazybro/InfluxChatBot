@@ -1,5 +1,7 @@
 const Discord = require('discord.js');
 const fs = require('fs');
+const index = require('../index');
+const functions = require('../Functions');
 
 module.exports = {
     name: 'listblacklists',
@@ -7,6 +9,8 @@ module.exports = {
     execute(message, args) {
         let embed = new Discord.MessageEmbed()
             .setColor("BLUE");
+
+        if(!message.member.hasPermission("MANAGE_CHANNELS")) return message.channel.send(embed.setDescription("You do not have permission to execute this command!")).then(msg => msg.delete( {timeout: 3000} ));
 
         let description = "";
 
@@ -16,10 +20,11 @@ module.exports = {
             description += `<@${val.id}>\n`;
         })
 
-        if(description == "") description = "There are currently no blacklists";
+        if (description === "") description = "There are currently no blacklists";
 
         embed.setDescription(description);
 
         message.channel.send(embed);
+        message.delete( {timeout: 2000} )
     }
 }
