@@ -12,7 +12,7 @@ module.exports = function (channelID, client) {
     let month = parseInt(date[1]) < 10 ? `0${date[1]}` : date[1];
     let day = parseInt(date[0]) < 10 ? `0${date[0]}` : date[0];
 
-    let today = date[2] + "-" + month + "-" + day;
+    let today = date[2] + '-' + month + '-' + day;
     console.log(today);
 
     const guild = `https://api.hypixel.net/guild?name=Influx&key=${process.env.APIKEY}`
