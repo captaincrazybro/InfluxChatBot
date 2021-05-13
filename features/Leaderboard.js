@@ -25,6 +25,7 @@ module.exports = function (channelID, client) {
                 fetch(usernames)
                     .then(username => username.json())
                     .then(usernamesJson => {
+                        console.log(guildInformation.guild.members[i].expHistory);
                         let array = {
                             username: usernamesJson[usernamesJson.length - 1].name,
                             gexp: guildInformation.guild.members[i].expHistory[today]
