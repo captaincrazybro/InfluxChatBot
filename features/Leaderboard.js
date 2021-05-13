@@ -12,8 +12,7 @@ module.exports = function (channelID, client) {
     let month = parseInt(date[1]) < 10 ? `0${date[1]}` : date[1];
     let day = parseInt(date[0]) < 10 ? `0${date[0]}` : date[0];
 
-    let today = date[2] + '-' + month + '-' + day;
-    console.log(today);
+    let today = date[2] + '-' + day + '-' + month;
 
     const guild = `https://api.hypixel.net/guild?name=Influx&key=${process.env.APIKEY}`
     let data = []
@@ -25,7 +24,6 @@ module.exports = function (channelID, client) {
                 fetch(usernames)
                     .then(username => username.json())
                     .then(usernamesJson => {
-                        console.log(guildInformation.guild.members[i].expHistory);
                         let array = {
                             username: usernamesJson[usernamesJson.length - 1].name,
                             gexp: guildInformation.guild.members[i].expHistory[today]
