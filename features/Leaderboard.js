@@ -8,8 +8,11 @@ module.exports = function (channelID, client) {
     let nz_date_string = new Date().toLocaleString("en-US", { timeZone: "America/New_York" });
 
     let date = nz_date_string.split(", ")[0].split("/");
-    let today = date[2] + "-" + date[1] + "-" + date[0];
-    console.log(today);
+
+    let month = parseInt(date[1]) < 10 ? `0${data[1]}` : date[1];
+    let date = parseInt(date[0]) < 10 ? `0${data[0]}` : data[0];
+
+    let today = date[2] + "-" + month + "-" + date;
 
     const guild = `https://api.hypixel.net/guild?name=Influx&key=${process.env.APIKEY}`
     let data = []
