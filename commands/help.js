@@ -9,16 +9,17 @@ module.exports = {
     execute(message, args) {
         let embed = new Discord.MessageEmbed()
             .setColor("BLUE")
-            .setTitle("InfluxBot Command")
+            .setTitle("Influx Bot Commands")
             .addField(`${prefix}addblacklist <user>`, "Blacklists a user and prevents them from using the chat bot.")
+            .addField(`${prefix}information [<user>]`, "Gets information about a server member.")
             .addField(`${prefix}leaderboard`, "Shows the today's daily gexp leaderboard.")
             .addField(`${prefix}link <code>`, "Links your minecraft account.")
             .addField(`${prefix}listblacklists`, "Lists the currently blacklisted users.")
-            .addField(`${prefix}player <user>`, "Gets a user's minecraft account information.");
+            .addField(`${prefix}player <user>`, "Gets a user's minecraft account information.")
+            .addField(`${prefix}purge <amount>`, "Purges a certain number of messages in a channel.")
+            .addField(`${prefix}removeblacklist <user>`, "Unblacklists a user.")
 
-        if (index.currentlyCooldowned[message.author.id] === message.author.id) return message.reply(embed.setDescription("Please wait a few seconds before executing the command again!")).then(msg => msg.delete( {timeout: 3000} ).then(message.delete( {timeout: 2000} )))
-        functions.setCooldown(5, message.author.id, message);
         message.channel.send(embed);
-        message.delete( {timeout: 2000} )
+        message.delete( {timeout: 3000} )
     }
 }

@@ -10,10 +10,8 @@ module.exports = {
         let embed = new Discord.MessageEmbed()
             .setColor("GOLD");
 
-        if (index.currentlyCooldowned[message.author.id] === message.author.id) return message.reply(embed.setDescription("Please wait a few seconds before executing the command again!")).then(msg => msg.delete( {timeout: 3000} ).then(message.delete( {timeout: 2000} )))
-        functions.setCooldown(5, message.author.id, message);
-        if(!users[message.author.id]) return message.reply(embed.setDescription("Your discord is not linked to any player. Please use `.link` to link your account!")).then(msg => msg.delete( {timeout: 3000} ));
-        if (index.currentlyCooldowned[message.author.id] === message.author.id) return message.reply(embed.setDescription("Please wait a few seconds before executing the command again!")).then(msg => msg.delete( {timeout: 3000} ).then(message.delete( {timeout: 2000} )))
+        if(!users[message.author.id]) return message.reply(embed.setDescription("Your discord is not linked to any player. Please use `.link` to link your account!")).then(msg => msg.delete( {timeout: 3000} ).then(message.delete({timeout: 3000})));
+        if (index.currentlyCooldowned[message.author.id] === message.author.id) return message.reply(embed.setDescription("Please wait a few seconds before executing the command again!")).then(msg => msg.delete( {timeout: 3000} ).then(message.delete({timeout: 3000})))
 
         let uuid = users[message.author.id];
         let name = await functions.getName(uuid);
@@ -25,6 +23,6 @@ module.exports = {
             .addField("UUID", uuid)
 
         await message.channel.send(embed);
-        message.delete( {timeout: 2000} )
+        message.delete( {timeout: 3000} )
     }
 }

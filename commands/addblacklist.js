@@ -10,7 +10,7 @@ module.exports = {
         let embed = new Discord.MessageEmbed()
             .setColor("GOLD");
 
-        if(!message.member.hasPermission("MANAGE_CHANNELS")) return message.reply(embed.setDescription("You do not have permission to execute this command!")).then(msg => msg.delete( {timeout: 3000} ));
+        if(!message.member.hasPermission("MANAGE_CHANNELS")) return message.reply(embed.setDescription("You do not have permission to execute this command!")).then(msg => msg.delete( {timeout: 3000} ).then(message.delete({timeout: 3000})));
 
         if(args.length == 0) return message.reply(embed.setDescription("Specify a user"));
 
@@ -26,14 +26,14 @@ module.exports = {
             if(val.id == target.id) outcome = true;
         })
 
-        if(outcome) return message.channel.reply(embed.setTitle("User is already blacklists"));
+        if(outcome) return message.channel.reply(embed.setDescription("User is already blacklists"));
 
         let time = null;
 
         if(args.length > 1){
             time = ms(args[1]);
             let date = new Date(Date.now() + time) 
-            if(!time) return message.channel.send(embed.setTitle("Invalid time"));
+            if(!time) return message.channel.send(embed.setDescription("Invalid time"));
         }
         
         let date = new Date();
@@ -49,6 +49,6 @@ module.exports = {
             .setDescription(`Successfully blacklisted <@${target.id}>`)
 
         await message.channel.send(embed);
-        message.delete( {timeout: 2000} )
+        message.delete( {timeout: 3000} )
     }
 }
