@@ -9,8 +9,8 @@ module.exports = function (channelID, client) {
 
     let date = nz_date_string.split(", ")[0].split("/");
 
-    let month = parseInt(date[1]) < 10 ? `0${data[1]}` : date[1];
-    let day = parseInt(date[0]) < 10 ? `0${data[0]}` : data[0];
+    let month = parseInt(date[1]) < 10 ? `0${date[1]}` : date[1];
+    let day = parseInt(date[0]) < 10 ? `0${date[0]}` : date[0];
 
     let today = date[2] + "-" + month + "-" + day;
 
