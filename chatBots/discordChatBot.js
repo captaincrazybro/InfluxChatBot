@@ -67,6 +67,9 @@ module.exports.run = async () => {
             client.write("chat", {message:`/gc ${nickname}: ${filter.clean(message.content)}`});
         }
     })
+
+    bot.login(process.env.TOKEN);
+
 }
 
 function filterCheck(message){
