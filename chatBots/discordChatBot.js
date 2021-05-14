@@ -49,7 +49,7 @@ module.exports.run = async () => {
             // blacklists
             let outcome = false;
 
-            let blacklists = JSON.parse(fs.readFileSync('../blacklists.json'));
+            let blacklists = JSON.parse(fs.readFileSync('./blacklists.json'));
             
             blacklists.forEach(val => {
                 if(val.id == message.author.id) outcome = true;
