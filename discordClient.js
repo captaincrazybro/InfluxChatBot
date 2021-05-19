@@ -60,6 +60,6 @@ module.exports = () => {
         }
     });
 
-    client.login("ODQxMzE3MjkxMjQwNDU2MjMz.YJk_yQ.veHHI0NzZZ5OqJ8Zu_YM1CBpPls");
+    client.login(process.env.TOKEN);
 
 }
