@@ -5,12 +5,17 @@ const {myKey} = require('../config.json')
 require('dotenv').config();
 
 module.exports = function (channelID, client) {
-    let today = new Date();
-    let dd = String(today.getDate()).padStart(2, '0');
-    let mm = String(today.getMonth() + 1).padStart(2, '0');
-    let yyyy = today.getFullYear();
-    today = yyyy + '-' + mm + '-' + dd;
-    const guild = `https://api.hypixel.net/guild?name=Influx&key=${myKey}`
+    // Date object initialized as per New Zealand timezone. Returns a datetime string
+    let nz_date_string = new Date().toLocaleString("en-US", { timeZone: "America/New_York" });
+
+    let date = nz_date_string.split(", ")[0].split("/");
+
+    let month = parseInt(date[1]) < 10 ? `0${date[1]}` : date[1];
+    let day = parseInt(date[0]) < 10 ? `0${date[0]}` : date[0];
+
+    let today = date[2] + '-' + day + '-' + month;
+
+    const guild = `https://api.hypixel.net/guild?name=Influx&key=${process.env.APIKEY}`
     let data = []
     fetch(guild)
         .then(guildInfo => guildInfo.json())
@@ -30,7 +35,7 @@ module.exports = function (channelID, client) {
                     .then(() => {
                         if(data.length == guildInformation.guild.members.length){
                             let embed = new Discord.MessageEmbed()
-                                .setTitle(`Influx Daily GEXP Leaderboard ${moment.utc(today).format('DD/MM/YY')}`)
+                                .setTitle(`Influx Daily GEXP Leaderboard ${today}`)
                                 .setColor("GOLD")
 
                             data.slice(0, 10)

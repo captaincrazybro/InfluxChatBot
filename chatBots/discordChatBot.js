@@ -47,6 +47,8 @@ module.exports.run = async () => {
 
             // blacklists
             let outcome = false;
+
+            let blacklists = JSON.parse(fs.readFileSync('./blacklists.json'));
             
             blacklists.forEach(val => {
                 if(val.id == message.author.id) outcome = true;
@@ -66,6 +68,9 @@ module.exports.run = async () => {
             client.write("chat", {message:`/gc ${nickname}: ${filter.clean(message.content)}`});
         }
     })
+
+    bot.login(process.env.TOKEN);
+
 }
 
 function filterCheck(message){
