@@ -1,6 +1,7 @@
 const Discord = require('discord.js');
 const fetch = require('node-fetch');
 const moment = require('moment');
+const {myKey} = require('../config.json')
 require('dotenv').config();
 
 module.exports = function (channelID, client) {
@@ -46,7 +47,6 @@ module.exports = function (channelID, client) {
                                 let newAmount = stat.gexp.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
                                 if (stat.gexp !== 0) {
                                     description += `\`${i + 1}.\` ${stat.username} ${newAmount} Guild Experience\n`;
-                                    //embed.setFooter("Rest could not be counted, as their daily GEXP is 0.")
                                 }
                             }
 
@@ -59,35 +59,5 @@ module.exports = function (channelID, client) {
                         }
                     })
             }
-            /*try {
-                setTimeout(function () {
-                    let embed = new Discord.MessageEmbed()
-                        .setTitle(`Influx Daily GEXP Leaderboard ${moment.utc(today).format('DD/MM/YY')}`)
-                        .setColor("GOLD")
-
-                    data.slice(0, 10)
-
-                    let description = "";
-
-                    for (let i = 0; i < 10; i++) {
-                        let stat = data[i];
-                        let newAmount = stat.gexp.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-                        if (stat.gexp !== 0) {
-                            description += `\`${i + 1}.\` ${stat.username} ${newAmount} Guild Experience\n`;
-                            embed.setFooter("Rest could not be counted, as their daily GEXP is 0.")
-                        }
-                    }
-
-                    embed.setDescription(description);
-
-                    setTimeout(function () {
-                        client.channels.fetch(channelID).then(channel => {
-                            channel.send(embed);
-                        });
-                    })
-                }, 4000);
-            } catch(err) {
-                console.log("Failed" + err)
-            }*/
         });
 }

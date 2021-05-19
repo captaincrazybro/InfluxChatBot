@@ -6,7 +6,6 @@ module.exports = function (message, args) {
 
     let embedFinal = new Discord.MessageEmbed()
         .setColor("GOLD")
-    if (!message.guild.member(target)) return message.reply(embedFinal.setDescription("User doesn't exist!")).then(msg => msg.delete({timeout: 2000})).then(message.delete({timeout: 2000}))
 
     if (!args[0]) { // if the user HAS NOT inputted a member
         const embed = new Discord.MessageEmbed()
@@ -17,6 +16,7 @@ module.exports = function (message, args) {
             .addField('Joined at', `${moment.utc(message.member.joinedAt).format('DD/MM/YY')}`, true)
         message.channel.send(embed);
     } else { // if the user HAS inputted a member
+        if (!message.guild.member(target)) return message.reply(embedFinal.setDescription("User doesn't exist!")).then(msg => msg.delete({timeout: 2000})).then(message.delete({timeout: 2000}))
         const embed = new Discord.MessageEmbed()
             .setTitle(`${target.user.tag}'s information`)
             .setColor("GOLD")

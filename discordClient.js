@@ -4,6 +4,8 @@ const fs = require("fs");
 const leaderboard = require("./features/Leaderboard");
 const schedule = require('node-schedule');
 const prefix = ".";
+const index = require('./index');
+const functions = require('./Functions');
 require('dotenv').config();
 
 module.exports = () => {
@@ -44,6 +46,11 @@ module.exports = () => {
         const args = message.content.slice(prefix.length).trim().split(/ +/);
         const command = args.shift().toLowerCase();
 
+        let embed = new Discord.MessageEmbed()
+            .setColor("RED")
+
+        if (index.currentlyCooldowned[message.author.id] === message.author.id) return message.reply(embed.setDescription("Please wait a few seconds before executing the command again!")).then(msg => msg.delete( {timeout: 3000} ).then(message.delete( {timeout: 2000} )))
+        functions.setCooldown(5, message.author.id, message);
         if(!client.commands.has(command)) return;
         try {
             client.commands.get(command).execute(message, args, client);
@@ -53,6 +60,6 @@ module.exports = () => {
         }
     });
 
-    client.login(process.env.TOKEN);
+    client.login("ODQxMzE3MjkxMjQwNDU2MjMz.YJk_yQ.veHHI0NzZZ5OqJ8Zu_YM1CBpPls");
 
 }

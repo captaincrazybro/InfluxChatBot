@@ -8,7 +8,6 @@ const users = require('../users.json');
 const ms = require("ms");
 var Filter = require('bad-words'),
     filter = new Filter();
-const { MessageEmbed } = require('discord.js');
 const index = require('../index');
 const filterWords = [
     "nig",
