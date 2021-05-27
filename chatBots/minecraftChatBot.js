@@ -139,7 +139,7 @@ module.exports.run = async () => {
                     let guild = bot.guilds.cache.get(guildId); 
                     let member = await guild.members.fetch(currentlyLinking[code]);
 
-                    member.setNickname(sender);
+                    //member.setNickname(sender);
 
                 }
                 

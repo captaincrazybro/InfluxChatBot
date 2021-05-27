@@ -1,7 +1,7 @@
 const discordClient = require('./discordClient');
 const discordChatBot = require('./chatBots/discordChatBot');
 const minecraftChatBot = require('./chatBots/minecraftChatBot');
-const updateBlacklists = require('./updateBlacklists');
+const updateBlacklists = require('./features/updateBlacklists');
 
 module.exports.currentlyLinking = {};
 module.exports.currentlyCooldowned = {};

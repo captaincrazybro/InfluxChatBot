@@ -11,6 +11,11 @@ module.exports.getName = function (uuid) {
         })
 }
 
+module.exports.getUuid = function(name){
+    const uuid = `https://api.mojang.com/users/profiles/minecraft/${name}`;
+    return fetch(uuid);
+}
+
 module.exports.setCooldown = function (seconds, user, message) {
     let time = seconds * 1000;
     if (time < 0) return message.reply("Please input a number greater than 0 (in seconds).").then(msg => msg.delete( {timeout: 3000} ))

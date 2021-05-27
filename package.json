@@ -8,6 +8,7 @@
     "dotenv": "^9.0.1",
     "fs": "*",
     "minecraft-protocol": "^1.25.0",
+    "mojang-api": "0.0.2",
     "moment": "^2.29.1",
     "ms": "^2.1.3",
     "node-fetch": "^2.6.1",
